@@ -277,6 +277,7 @@ func getAttrVal(node *html.Node, attrName string) string {
 	return ""
 }
 
+//FromHtmlNode removes empty lines and unnecessary white space
 func FromHtmlNode(doc *html.Node) (string, error) {
 	ctx := textifyTraverseCtx{
 		Buf: bytes.Buffer{},
@@ -291,6 +292,7 @@ func FromHtmlNode(doc *html.Node) (string, error) {
 
 }
 
+//FromReader removes Unicode Byte Order Mark from a reader and returns the string
 func FromReader(reader io.Reader) (string, error) {
 	bs, err := ioutil.ReadAll(reader)
 	newReader, _ := utfbom.Skip(bytes.NewReader(bs))
@@ -302,6 +304,7 @@ func FromReader(reader io.Reader) (string, error) {
 	return FromHtmlNode(doc)
 }
 
+//FromString removes Unicode Byte Order Mark from a string
 func FromString(input string) (string, error) {
 	bs := utfbom.SkipOnly(bytes.NewReader([]byte(input)))
 	text, err := FromReader(bs)
